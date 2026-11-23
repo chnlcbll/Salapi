@@ -138,7 +138,7 @@ button { cursor: pointer; }
   border-radius: 10px;
   background: var(--surface);
   color: var(--muted);
-  transition: color .15s var(--ease), background-color .15s var(--ease);
+  transition: color .15s var(--ease), background-color .15s var(--ease), scale 160ms var(--ease);
 }
 .icon-btn:hover { color: var(--ink); background: var(--raised); }
 .icon-btn.spinning svg { animation: spin .8s linear infinite; }
@@ -215,7 +215,7 @@ svg { flex: none; }
   border-radius: 12px;
   background: var(--surface);
   text-align: left;
-  transition: border-color .15s var(--ease), background-color .15s var(--ease);
+  transition: border-color .15s var(--ease), background-color .15s var(--ease), scale 160ms var(--ease);
 }
 .currency-btn:hover { background: var(--raised); }
 
@@ -240,10 +240,10 @@ svg { flex: none; }
   border-radius: 10px;
   background: var(--surface);
   color: var(--ink-2);
-  transition: transform .3s var(--ease), background-color .15s var(--ease), color .15s var(--ease);
+  transition: rotate .3s var(--ease), scale 160ms var(--ease), background-color .15s var(--ease), color .15s var(--ease);
 }
 .swap:hover { background: var(--raised); color: var(--ink); }
-.swap.flip { transform: rotate(180deg); }
+.swap.flip { rotate: 180deg; }
 
 /* Flags */
 .flag {
@@ -311,7 +311,7 @@ svg { flex: none; }
   border-radius: 8px;
   background: var(--surface);
   font-size: 14px;
-  transition: background-color .15s var(--ease), color .15s var(--ease);
+  transition: background-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
 .pill-btn:hover { background: var(--bg); }
 .pill-btn:disabled { opacity: .5; cursor: default; }
@@ -331,7 +331,7 @@ svg { flex: none; }
   background: var(--surface);
   font-size: 14px;
   font-weight: 500;
-  transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease);
+  transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
 .chip:hover { background: var(--raised); }
 .chip.active { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
@@ -357,6 +357,7 @@ svg { flex: none; }
   font-size: 14px;
   font-weight: 500;
   padding: 4px;
+  transition: scale 160ms var(--ease);
 }
 
 .fav-list { list-style: none; margin: 0; padding: 0; }
@@ -375,7 +376,7 @@ svg { flex: none; }
   border-radius: 8px;
   background: none;
   text-align: left;
-  transition: background-color .15s var(--ease);
+  transition: background-color .15s var(--ease), scale 160ms var(--ease);
 }
 .fav-row:hover { background: var(--raised); }
 .fav-row .cur-text { flex: 1; }
@@ -396,7 +397,7 @@ svg { flex: none; }
   border-radius: 8px;
   background: none;
   color: var(--muted);
-  transition: background-color .15s var(--ease), color .15s var(--ease);
+  transition: background-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
 .remove-btn:hover { background: var(--raised); color: var(--ink); }
 
@@ -515,13 +516,17 @@ dialog::backdrop {
   border-radius: 8px;
   background: none;
   text-align: left;
-  transition: background-color .12s var(--ease);
+  transition: background-color .12s var(--ease), scale 160ms var(--ease);
 }
 .picker-item:hover, .picker-item:focus-visible { background: var(--raised); outline: none; }
 .picker-item .cur-text { flex: 1; }
 .picker-item .check { color: var(--accent); display: grid; }
 
 .picker-empty { padding: 24px 12px; text-align: center; color: var(--muted); }
+
+/* Press feedback: pressables shrink slightly while held */
+:is(.icon-btn, .swap, .pill-btn, .chip, .remove-btn, .link-btn):active:not(:disabled) { scale: 0.97; }
+:is(.currency-btn, .fav-row, .picker-item):active { scale: 0.98; }
 
 @media (max-width: 520px) {
   dialog {
