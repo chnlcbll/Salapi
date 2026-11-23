@@ -13,6 +13,7 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px rgba(0, 0, 0, .05);
   --ease: cubic-bezier(.22, 1, .36, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
   /* Follow the system by default; the theme button pins one via <meta name="color-scheme"> */
@@ -546,6 +547,20 @@ dialog::backdrop {
   #amount { font-size: 32px; }
   .amount-symbol { font-size: 24px; }
   .result-main { font-size: 36px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    dialog {
+      opacity: 1;
+      transform: translateY(100%);
+      transition-duration: 300ms;
+      transition-timing-function: var(--ease-drawer);
+    }
+    :is(dialog[open]):where(:not([data-closing])) {
+      opacity: 1;
+      @starting-style { opacity: 1; transform: translateY(100%); }
+    }
+    dialog::backdrop { transition-duration: 300ms; }
+  }
 }
 
 @media (max-width: 360px) {
