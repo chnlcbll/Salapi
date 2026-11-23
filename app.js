@@ -319,7 +319,7 @@
   }
 
   function renderFavs(amt) {
-    els.compareTitle.textContent = `${symbolOf(state.from)}${number(amt, 6)} in`;
+    els.compareTitle.textContent = `Compare ${symbolOf(state.from)}${number(amt, 6)} in`;
     const frag = document.createDocumentFragment();
     const list = state.favs.filter((c) => c !== state.from);
     if (!list.length) {
