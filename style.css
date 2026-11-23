@@ -12,6 +12,7 @@
   --warn: #B45309;
   --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px rgba(0, 0, 0, .05);
   --ease: cubic-bezier(.22, 1, .36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
   /* Follow the system by default; the theme button pins one via <meta name="color-scheme"> */
@@ -240,7 +241,7 @@ svg { flex: none; }
   border-radius: 10px;
   background: var(--surface);
   color: var(--ink-2);
-  transition: rotate .3s var(--ease), scale 160ms var(--ease), background-color .15s var(--ease), color .15s var(--ease);
+  transition: rotate 220ms var(--ease-in-out), scale 160ms var(--ease), background-color .15s var(--ease), color .15s var(--ease);
 }
 .swap:hover { background: var(--raised); color: var(--ink); }
 .swap.flip { rotate: 180deg; }
