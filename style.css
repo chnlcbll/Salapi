@@ -548,7 +548,11 @@ dialog::backdrop {
   .cur-name { display: none; }
 }
 
-/* Reduced motion: no movement anywhere; the picker keeps a short fade (set above) */
+/* Reduced motion: drop movement (press shrink, rotation, spin), keep color/opacity feedback */
 @media (prefers-reduced-motion: reduce) {
-  *:not(dialog), *::before, *::after { transition: none !important; animation: none !important; }
+  :is(.icon-btn, .swap, .pill-btn, .chip, .remove-btn, .link-btn, .currency-btn, .fav-row, .picker-item):active { scale: none; }
+  .swap { transition-property: background-color, color; }
+  .swap.flip { rotate: none; }
+  .icon-btn.spinning svg { animation: pulse 1s ease-in-out infinite; }
 }
+@keyframes pulse { 50% { opacity: .4; } }
