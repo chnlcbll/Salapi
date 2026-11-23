@@ -615,7 +615,11 @@
     } catch { return null; }
   }
   function applyTheme(theme) {
+    const root = document.documentElement;
+    root.classList.add('theme-switching');
     schemeMeta.content = theme || 'light dark';
+    getComputedStyle(root).color; // flush the new colors while transitions are off
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('theme-switching')));
   }
   function renderedTheme() {
     const pinned = schemeMeta.content;

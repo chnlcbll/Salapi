@@ -53,6 +53,10 @@
   --shadow: none;
 }
 
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after { transition: none !important; }
+
 /* Theme button: show the action for the opposite of what's rendered (no JS needed to stay current) */
 .theme-to-dark, .theme-to-light { place-items: center; width: 100%; height: 100%; }
 .theme-to-dark { display: grid; }
