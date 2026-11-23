@@ -141,7 +141,7 @@ button { cursor: pointer; }
   color: var(--muted);
   transition: color .15s var(--ease), background-color .15s var(--ease), scale 160ms var(--ease);
 }
-.icon-btn:hover { color: var(--ink); background: var(--raised); }
+@media (hover: hover) and (pointer: fine) { .icon-btn:hover { color: var(--ink); background: var(--raised); } }
 .icon-btn.spinning svg { animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -218,7 +218,7 @@ svg { flex: none; }
   text-align: left;
   transition: border-color .15s var(--ease), background-color .15s var(--ease), scale 160ms var(--ease);
 }
-.currency-btn:hover { background: var(--raised); }
+@media (hover: hover) and (pointer: fine) { .currency-btn:hover { background: var(--raised); } }
 
 .cur-text { display: flex; flex-direction: column; min-width: 0; }
 .cur-code { font-weight: 500; font-size: 16px; line-height: 20px; }
@@ -243,7 +243,7 @@ svg { flex: none; }
   color: var(--ink-2);
   transition: rotate 220ms var(--ease-in-out), scale 160ms var(--ease), background-color .15s var(--ease), color .15s var(--ease);
 }
-.swap:hover { background: var(--raised); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) { .swap:hover { background: var(--raised); color: var(--ink); } }
 .swap.flip { rotate: 180deg; }
 
 /* Flags */
@@ -314,7 +314,7 @@ svg { flex: none; }
   font-size: 14px;
   transition: background-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
-.pill-btn:hover { background: var(--bg); }
+@media (hover: hover) and (pointer: fine) { .pill-btn:hover { background: var(--bg); } }
 .pill-btn:disabled { opacity: .5; cursor: default; }
 .pill-btn[aria-pressed="true"] { color: var(--accent); }
 
@@ -334,7 +334,7 @@ svg { flex: none; }
   font-weight: 500;
   transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
-.chip:hover { background: var(--raised); }
+@media (hover: hover) and (pointer: fine) { .chip:hover { background: var(--raised); } }
 .chip.active { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
 /* Compare */
@@ -379,7 +379,7 @@ svg { flex: none; }
   text-align: left;
   transition: background-color .15s var(--ease), scale 160ms var(--ease);
 }
-.fav-row:hover { background: var(--raised); }
+@media (hover: hover) and (pointer: fine) { .fav-row:hover { background: var(--raised); } }
 .fav-row .cur-text { flex: 1; }
 .fav-value {
   font-weight: 500;
@@ -400,7 +400,7 @@ svg { flex: none; }
   color: var(--muted);
   transition: background-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
-.remove-btn:hover { background: var(--raised); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) { .remove-btn:hover { background: var(--raised); color: var(--ink); } }
 
 .empty { padding: 12px 12px 16px; color: var(--muted); font-size: 14px; }
 
@@ -519,7 +519,8 @@ dialog::backdrop {
   text-align: left;
   transition: background-color .12s var(--ease), scale 160ms var(--ease);
 }
-.picker-item:hover, .picker-item:focus-visible { background: var(--raised); outline: none; }
+.picker-item:focus-visible { background: var(--raised); outline: none; }
+@media (hover: hover) and (pointer: fine) { .picker-item:hover { background: var(--raised); } }
 .picker-item .cur-text { flex: 1; }
 .picker-item .check { color: var(--accent); display: grid; }
 
