@@ -7,11 +7,18 @@
   <meta name="description" content="Peso-first currency converter with live exchange rates.">
   <meta name="theme-color" content="#8B5E3C">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-5AheNn/+6J6gg+7BRIGWRB/EuRQtUYcu7NXghuehFts='; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://flagcdn.com data:; connect-src https://open.er-api.com https://cdn.jsdelivr.net https://latest.currency-api.pages.dev; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-5AheNn/+6J6gg+7BRIGWRB/EuRQtUYcu7NXghuehFts='; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://flagcdn.com data:; connect-src https://open.er-api.com https://cdn.jsdelivr.net https://latest.currency-api.pages.dev; manifest-src 'self'; base-uri 'none'; form-action 'none'">
   <meta name="color-scheme" content="light dark">
   <!-- Applies a saved theme before first paint (no flash). Must stay byte-identical: its hash is in the CSP above. -->
   <script>try{var t=localStorage.getItem("salapi:theme");if(t==="light"||t==="dark")document.querySelector('meta[name="color-scheme"]').content=t}catch(e){}</script>
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <!-- Home-screen icon + app name (iOS uses apple-touch-icon; Android/desktop use the manifest) -->
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="Salapi">
+  <meta name="application-name" content="Salapi">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Outfit:wght@400;500;600&display=swap">
