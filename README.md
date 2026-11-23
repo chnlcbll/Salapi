@@ -6,6 +6,8 @@
 
 <p align="center">See how far your pesos go, in any currency, in a couple of taps.</p>
 
+<p align="center"><a href="https://salapi-exchange.vercel.app/"><strong>Try it live → salapi-exchange.vercel.app</strong></a></p>
+
 <p align="center">
   <img src="assets/screenshots/light.jpg" alt="Salapi in light mode: ₱10,000 converted to $156.45" width="260">
   &nbsp;&nbsp;
@@ -25,7 +27,7 @@ It's handy whenever you're thinking in pesos:
 - **Shopping online** from stores that price in another currency
 - **Getting paid** by clients or employers overseas
 
-There's nothing to sign up for and nothing to install. Open it and start typing.
+There's nothing to sign up for and nothing to install. [Open it](https://salapi-exchange.vercel.app/) and start typing.
 
 *Salapi* is an old Tagalog word for money.
 
