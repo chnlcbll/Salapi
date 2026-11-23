@@ -12,6 +12,10 @@
   --warn: #B45309;
   --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px rgba(0, 0, 0, .05);
   --ease: cubic-bezier(.22, 1, .36, 1);
+  --band: #8B5E3C;
+  --on-band: #F6EDE4;
+  --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%235A3720' fill-opacity='.035'/%3E%3C/svg%3E");
+  --weave-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%23FFFFFF' fill-opacity='.10'/%3E%3C/svg%3E");
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
   /* Follow the system by default; the theme button pins one via <meta name="color-scheme"> */
@@ -35,6 +39,10 @@
     --on-accent: #2A1709;
     --warn: #F0A35E;
     --shadow: none;
+    --band: #2B1B11;
+    --on-band: #F1E6DA;
+    --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%23D9A877' fill-opacity='.03'/%3E%3C/svg%3E");
+    --weave-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%23FFFFFF' fill-opacity='.05'/%3E%3C/svg%3E");
   }
 }
 :root:has(> head > meta[name="color-scheme"][content="dark"]) {
@@ -50,6 +58,10 @@
   --on-accent: #2A1709;
   --warn: #F0A35E;
   --shadow: none;
+  --band: #2B1B11;
+  --on-band: #F1E6DA;
+  --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%23D9A877' fill-opacity='.03'/%3E%3C/svg%3E");
+  --weave-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%23FFFFFF' fill-opacity='.05'/%3E%3C/svg%3E");
 }
 
 /* Theme button: show the action for the opposite of what's rendered (no JS needed to stay current) */
@@ -85,7 +97,16 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--bg);
+  /* Banig-style weave over everything, a brown header band, then the page color */
+  background:
+    var(--weave) top left / 32px 32px,
+    linear-gradient(in oklab,
+      var(--band) 0, var(--band) 96px,
+      color-mix(in oklab, var(--band) 80%, var(--bg)) 150px,
+      color-mix(in oklab, var(--band) 45%, var(--bg)) 210px,
+      color-mix(in oklab, var(--band) 15%, var(--bg)) 270px,
+      var(--bg) 330px) top / 100% 330px no-repeat,
+    var(--bg);
   color: var(--ink);
   font-family: Outfit, system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 16px;
@@ -94,6 +115,19 @@ body {
   line-height: 1.4;
   padding: 24px 16px calc(32px + env(safe-area-inset-bottom));
 }
+
+/* Light weave on the band, fading out with it */
+body { position: relative; }
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 330px;
+  background: var(--weave-band) top left / 32px 32px;
+  mask-image: linear-gradient(#000 30%, transparent);
+  pointer-events: none;
+}
+.app { position: relative; }
 
 button, input { font: inherit; color: inherit; }
 button { cursor: pointer; }
@@ -127,7 +161,16 @@ button { cursor: pointer; }
   font-size: 20px;
   font-weight: 600;
 }
-.brand img { border-radius: 8px; }
+.brand img { border-radius: 8px; box-shadow: 0 0 0 1px rgba(255, 255, 255, .2); }
+
+/* Header sits on the brown band */
+.top .brand { color: var(--on-band); }
+.top .icon-btn {
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(255, 255, 255, .16);
+  color: var(--on-band);
+}
+.top .icon-btn:hover { background: rgba(255, 255, 255, .16); color: #FFFFFF; }
 
 .icon-btn {
   display: grid;

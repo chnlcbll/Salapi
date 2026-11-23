@@ -353,7 +353,7 @@
       return;
     }
     const when = state.data.dateOnly ? dateFmt.format(state.data.updated) : dateTimeFmt.format(state.data.updated);
-    let text = `Rates as of ${when} · ${state.data.source}`;
+    let text = `Rates as of ${when}`;
     if (state.loading) text += ' · updating…';
     else if (state.failed) { text += ' · offline, showing saved rates'; s.classList.add('warn'); }
     s.textContent = text;
