@@ -12,6 +12,8 @@
   --warn: #B45309;
   --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px rgba(0, 0, 0, .05);
   --ease: cubic-bezier(.22, 1, .36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --band: #8B5E3C;
   --on-band: #F6EDE4;
   --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%235A3720' fill-opacity='.035'/%3E%3C/svg%3E");
@@ -63,6 +65,10 @@
   --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%23D9A877' fill-opacity='.03'/%3E%3C/svg%3E");
   --weave-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%23FFFFFF' fill-opacity='.05'/%3E%3C/svg%3E");
 }
+
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after { transition: none !important; }
 
 /* Theme button: show the action for the opposite of what's rendered (no JS needed to stay current) */
 .theme-to-dark, .theme-to-light { place-items: center; width: 100%; height: 100%; }
@@ -181,9 +187,9 @@ button { cursor: pointer; }
   border-radius: 10px;
   background: var(--surface);
   color: var(--muted);
-  transition: color .15s var(--ease), background-color .15s var(--ease);
+  transition: color .15s var(--ease), background-color .15s var(--ease), scale 160ms var(--ease);
 }
-.icon-btn:hover { color: var(--ink); background: var(--raised); }
+@media (hover: hover) and (pointer: fine) { .icon-btn:hover { color: var(--ink); background: var(--raised); } }
 .icon-btn.spinning svg { animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -258,9 +264,9 @@ svg { flex: none; }
   border-radius: 12px;
   background: var(--surface);
   text-align: left;
-  transition: border-color .15s var(--ease), background-color .15s var(--ease);
+  transition: border-color .15s var(--ease), background-color .15s var(--ease), scale 160ms var(--ease);
 }
-.currency-btn:hover { background: var(--raised); }
+@media (hover: hover) and (pointer: fine) { .currency-btn:hover { background: var(--raised); } }
 
 .cur-text { display: flex; flex-direction: column; min-width: 0; }
 .cur-code { font-weight: 500; font-size: 16px; line-height: 20px; }
@@ -283,10 +289,10 @@ svg { flex: none; }
   border-radius: 10px;
   background: var(--surface);
   color: var(--ink-2);
-  transition: transform .3s var(--ease), background-color .15s var(--ease), color .15s var(--ease);
+  transition: rotate 220ms var(--ease-in-out), scale 160ms var(--ease), background-color .15s var(--ease), color .15s var(--ease);
 }
-.swap:hover { background: var(--raised); color: var(--ink); }
-.swap.flip { transform: rotate(180deg); }
+@media (hover: hover) and (pointer: fine) { .swap:hover { background: var(--raised); color: var(--ink); } }
+.swap.flip { rotate: 180deg; }
 
 /* Flags */
 .flag {
@@ -354,9 +360,9 @@ svg { flex: none; }
   border-radius: 8px;
   background: var(--surface);
   font-size: 14px;
-  transition: background-color .15s var(--ease), color .15s var(--ease);
+  transition: background-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
-.pill-btn:hover { background: var(--bg); }
+@media (hover: hover) and (pointer: fine) { .pill-btn:hover { background: var(--bg); } }
 .pill-btn:disabled { opacity: .5; cursor: default; }
 .pill-btn[aria-pressed="true"] { color: var(--accent); }
 
@@ -374,9 +380,9 @@ svg { flex: none; }
   background: var(--surface);
   font-size: 14px;
   font-weight: 500;
-  transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease);
+  transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
-.chip:hover { background: var(--raised); }
+@media (hover: hover) and (pointer: fine) { .chip:hover { background: var(--raised); } }
 .chip.active { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
 /* Compare */
@@ -400,6 +406,7 @@ svg { flex: none; }
   font-size: 14px;
   font-weight: 500;
   padding: 4px;
+  transition: scale 160ms var(--ease);
 }
 
 .fav-list { list-style: none; margin: 0; padding: 0; }
@@ -418,9 +425,9 @@ svg { flex: none; }
   border-radius: 8px;
   background: none;
   text-align: left;
-  transition: background-color .15s var(--ease);
+  transition: background-color .15s var(--ease), scale 160ms var(--ease);
 }
-.fav-row:hover { background: var(--raised); }
+@media (hover: hover) and (pointer: fine) { .fav-row:hover { background: var(--raised); } }
 .fav-row .cur-text { flex: 1; }
 .fav-value {
   font-weight: 500;
@@ -439,9 +446,9 @@ svg { flex: none; }
   border-radius: 8px;
   background: none;
   color: var(--muted);
-  transition: background-color .15s var(--ease), color .15s var(--ease);
+  transition: background-color .15s var(--ease), color .15s var(--ease), scale 160ms var(--ease);
 }
-.remove-btn:hover { background: var(--raised); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) { .remove-btn:hover { background: var(--raised); color: var(--ink); } }
 
 .empty { padding: 12px 12px 16px; color: var(--muted); font-size: 14px; }
 
@@ -558,13 +565,18 @@ dialog::backdrop {
   border-radius: 8px;
   background: none;
   text-align: left;
-  transition: background-color .12s var(--ease);
+  transition: background-color .12s var(--ease), scale 160ms var(--ease);
 }
-.picker-item:hover, .picker-item:focus-visible { background: var(--raised); outline: none; }
+.picker-item:focus-visible { background: var(--raised); outline: none; }
+@media (hover: hover) and (pointer: fine) { .picker-item:hover { background: var(--raised); } }
 .picker-item .cur-text { flex: 1; }
 .picker-item .check { color: var(--accent); display: grid; }
 
 .picker-empty { padding: 24px 12px; text-align: center; color: var(--muted); }
+
+/* Press feedback: pressables shrink slightly while held */
+:is(.icon-btn, .swap, .pill-btn, .chip, .remove-btn, .link-btn):active:not(:disabled) { scale: 0.97; }
+:is(.currency-btn, .fav-row, .picker-item):active { scale: 0.98; }
 
 @media (max-width: 520px) {
   dialog {
@@ -578,6 +590,20 @@ dialog::backdrop {
   #amount { font-size: 32px; }
   .amount-symbol { font-size: 24px; }
   .result-main { font-size: 36px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    dialog {
+      opacity: 1;
+      transform: translateY(100%);
+      transition-duration: 300ms;
+      transition-timing-function: var(--ease-drawer);
+    }
+    :is(dialog[open]):where(:not([data-closing])) {
+      opacity: 1;
+      @starting-style { opacity: 1; transform: translateY(100%); }
+    }
+    dialog::backdrop { transition-duration: 300ms; }
+  }
 }
 
 @media (max-width: 360px) {
@@ -585,7 +611,11 @@ dialog::backdrop {
   .cur-name { display: none; }
 }
 
-/* Reduced motion: no movement anywhere; the picker keeps a short fade (set above) */
+/* Reduced motion: drop movement (press shrink, rotation, spin), keep color/opacity feedback */
 @media (prefers-reduced-motion: reduce) {
-  *:not(dialog), *::before, *::after { transition: none !important; animation: none !important; }
+  :is(.icon-btn, .swap, .pill-btn, .chip, .remove-btn, .link-btn, .currency-btn, .fav-row, .picker-item):active { scale: none; }
+  .swap { transition-property: background-color, color; }
+  .swap.flip { rotate: none; }
+  .icon-btn.spinning svg { animation: pulse 1s ease-in-out infinite; }
 }
+@keyframes pulse { 50% { opacity: .4; } }
