@@ -13,11 +13,16 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px rgba(0, 0, 0, .05);
   --ease: cubic-bezier(.22, 1, .36, 1);
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  color-scheme: light;
+
+  /* Follow the system by default; the theme button pins one via <meta name="color-scheme"> */
+  color-scheme: light dark;
+  &:has(> head > meta[name="color-scheme"][content="light"]) { color-scheme: light; }
+  &:has(> head > meta[name="color-scheme"][content="dark"]) { color-scheme: dark; }
 }
 
+/* Dark tokens: system dark (unless pinned light), or pinned dark. Keep both blocks identical. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(:has(> head > meta[name="color-scheme"][content="light"])) {
     --bg: #131414;
     --surface: #18191A;
     --raised: #222424;
@@ -30,9 +35,48 @@
     --on-accent: #06231A;
     --warn: #F0A35E;
     --shadow: none;
-    color-scheme: dark;
   }
 }
+:root:has(> head > meta[name="color-scheme"][content="dark"]) {
+  --bg: #131414;
+  --surface: #18191A;
+  --raised: #222424;
+  --ink: #ECEDED;
+  --ink-2: #A3A8A6;
+  --muted: #868C8A;
+  --line: rgba(236, 237, 237, .08);
+  --line-strong: rgba(236, 237, 237, .16);
+  --accent: #5CCFA4;
+  --on-accent: #06231A;
+  --warn: #F0A35E;
+  --shadow: none;
+}
+
+/* Theme button: show the action for the opposite of what's rendered (no JS needed to stay current) */
+.theme-to-dark, .theme-to-light { place-items: center; width: 100%; height: 100%; }
+.theme-to-dark { display: grid; }
+.theme-to-light { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not(:has(> head > meta[name="color-scheme"][content="light"])) {
+    .theme-to-dark { display: none; }
+    .theme-to-light { display: grid; }
+  }
+}
+:root:has(> head > meta[name="color-scheme"][content="dark"]) {
+  .theme-to-dark { display: none; }
+  .theme-to-light { display: grid; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.top-actions { display: flex; gap: 8px; }
 
 * { box-sizing: border-box; }
 

@@ -18,7 +18,8 @@
 - Compare list: see one amount in several currencies at once
 - Remembers your last currencies and amount
 - Keeps working offline with the last rates it loaded
-- Light and dark mode, works on a phone
+- Follows your system's light/dark setting, with a header button to switch
+- Works on a phone
 
 ## How rates work
 

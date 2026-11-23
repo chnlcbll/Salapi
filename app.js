@@ -603,6 +603,40 @@
     });
   }
 
+  // ---------- theme (two-state: system, or the opposite of system) ----------
+  const THEME_KEY = 'salapi:theme';
+  const schemeMeta = document.querySelector('meta[name="color-scheme"]');
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function storedTheme() {
+    try {
+      const t = localStorage.getItem(THEME_KEY);
+      return t === 'light' || t === 'dark' ? t : null;
+    } catch { return null; }
+  }
+  function applyTheme(theme) {
+    schemeMeta.content = theme || 'light dark';
+  }
+  function renderedTheme() {
+    const pinned = schemeMeta.content;
+    if (pinned === 'light' || pinned === 'dark') return pinned;
+    return systemDark.matches ? 'dark' : 'light';
+  }
+
+  $('themeBtn').addEventListener('click', () => {
+    const target = renderedTheme() === 'dark' ? 'light' : 'dark';
+    const system = systemDark.matches ? 'dark' : 'light';
+    // Going back to what the system shows = undo the override, so future OS changes apply again.
+    try {
+      if (target === system) localStorage.removeItem(THEME_KEY);
+      else localStorage.setItem(THEME_KEY, target);
+    } catch { /* still apply it for this visit */ }
+    applyTheme(target === system ? null : target);
+  });
+
+  // Keep other open tabs in sync.
+  window.addEventListener('storage', (e) => { if (e.key === THEME_KEY) applyTheme(storedTheme()); });
+
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(false); });
   window.addEventListener('online', () => refresh(true));
 
