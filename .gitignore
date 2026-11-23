@@ -1,0 +1,19 @@
+# Secrets (never commit these)
+.env
+.env.*
+*.pem
+*.key
+
+# Vercel CLI
+.vercel/
+
+# Local tooling (can contain local paths)
+.claude/
+.impeccable/
+node_modules/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
