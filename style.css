@@ -1,13 +1,13 @@
 :root {
-  --bg: #F4F5F5;
+  --bg: #F5F4F2;
   --surface: #FFFFFF;
-  --raised: #EFF1F1;
+  --raised: #EFEDEA;
   --ink: #161A19;
   --ink-2: #4E5755;
   --muted: #6B7371;
   --line: rgba(22, 26, 25, .09);
   --line-strong: rgba(22, 26, 25, .16);
-  --accent: #0E4D3A;
+  --accent: #5A3720;
   --on-accent: #FFFFFF;
   --warn: #B45309;
   --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px rgba(0, 0, 0, .05);
@@ -23,31 +23,31 @@
 /* Dark tokens: system dark (unless pinned light), or pinned dark. Keep both blocks identical. */
 @media (prefers-color-scheme: dark) {
   :root:not(:has(> head > meta[name="color-scheme"][content="light"])) {
-    --bg: #131414;
-    --surface: #18191A;
-    --raised: #222424;
+    --bg: #151312;
+    --surface: #1B1817;
+    --raised: #26221F;
     --ink: #ECEDED;
     --ink-2: #A3A8A6;
     --muted: #868C8A;
     --line: rgba(236, 237, 237, .08);
     --line-strong: rgba(236, 237, 237, .16);
-    --accent: #5CCFA4;
-    --on-accent: #06231A;
+    --accent: #D9A877;
+    --on-accent: #2A1709;
     --warn: #F0A35E;
     --shadow: none;
   }
 }
 :root:has(> head > meta[name="color-scheme"][content="dark"]) {
-  --bg: #131414;
-  --surface: #18191A;
-  --raised: #222424;
+  --bg: #151312;
+  --surface: #1B1817;
+  --raised: #26221F;
   --ink: #ECEDED;
   --ink-2: #A3A8A6;
   --muted: #868C8A;
   --line: rgba(236, 237, 237, .08);
   --line-strong: rgba(236, 237, 237, .16);
-  --accent: #5CCFA4;
-  --on-accent: #06231A;
+  --accent: #D9A877;
+  --on-accent: #2A1709;
   --warn: #F0A35E;
   --shadow: none;
 }
