@@ -360,6 +360,42 @@
   }
 
   // ---------- picker ----------
+  // Exit animations need overlay + discrete display transitions. Firefox parses
+  // allow-discrete but doesn't transition display, so probe it for real.
+  let supportsDisplayTransition;
+  function canTransitionDisplay() {
+    if (supportsDisplayTransition !== undefined) return supportsDisplayTransition;
+    if (!window.CSS?.supports?.('transition-behavior', 'allow-discrete') || !document.body) return false;
+    const probe = document.createElement('div');
+    probe.style.cssText = 'transition: display 1s allow-discrete !important; display: block;';
+    document.body.appendChild(probe);
+    getComputedStyle(probe).display;
+    probe.style.display = 'none';
+    supportsDisplayTransition = getComputedStyle(probe).display === 'block';
+    probe.remove();
+    return supportsDisplayTransition;
+  }
+  const supportsTopLayerExit = () => Boolean(window.CSS?.supports?.('overlay', 'auto')) && canTransitionDisplay();
+
+  async function closePicker() {
+    const d = els.picker;
+    if (!d.open) return;
+    if (!supportsTopLayerExit()) {
+      // Fallback: play the exit transition while still in the top layer, then close.
+      d.setAttribute('data-closing', '');
+      const animations = d.getAnimations({ subtree: true });
+      if (animations.length) {
+        await Promise.race([
+          Promise.allSettled(animations.map((a) => a.finished)),
+          new Promise((r) => setTimeout(r, 2000)),
+        ]);
+      }
+      if (!d.hasAttribute('data-closing')) return;
+      d.removeAttribute('data-closing');
+    }
+    d.close();
+  }
+
   let pickerMode = 'to';
   const haystacks = new Map();
   function haystack(code) {
@@ -371,6 +407,7 @@
 
   function openPicker(mode) {
     pickerMode = mode;
+    els.picker.removeAttribute('data-closing');
     els.pickerTitle.textContent = { from: 'Convert from', to: 'Convert to', fav: 'Add to compare' }[mode];
     els.pickerSearch.value = '';
     renderPicker();
@@ -429,7 +466,7 @@
     } else if (!state.favs.includes(code)) {
       state.favs.push(code);
     }
-    els.picker.close();
+    closePicker();
     savePrefs();
     render();
   }
@@ -520,7 +557,13 @@
 
   els.pickerSearch.addEventListener('input', renderPicker);
   els.pickerSearch.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Escape' && els.pickerSearch.value) {
+      // Esc clears the search first instead of closing the whole picker.
+      e.preventDefault();
+      e.stopPropagation();
+      els.pickerSearch.value = '';
+      renderPicker();
+    } else if (e.key === 'Enter') {
       const first = els.pickerList.querySelector('.picker-item');
       if (first) pick(first.dataset.code);
     } else if (e.key === 'ArrowDown') {
@@ -542,8 +585,23 @@
     const next = items[Math.min(items.length - 1, i + (e.key === 'ArrowDown' ? 1 : -1))];
     if (next) next.focus();
   });
-  els.pickerClose.addEventListener('click', () => els.picker.close());
-  els.picker.addEventListener('click', (e) => { if (e.target === els.picker) els.picker.close(); });
+  els.pickerClose.addEventListener('click', closePicker);
+
+  // Esc and light dismiss (closedby="any") fire `cancel`; route them through the animated close.
+  els.picker.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closePicker();
+  });
+
+  // Light-dismiss fallback for browsers without `closedby` (Safari).
+  if (!('closedBy' in HTMLDialogElement.prototype)) {
+    els.picker.addEventListener('click', (e) => {
+      if (e.target !== els.picker) return;
+      const r = els.picker.getBoundingClientRect();
+      const inside = r.top <= e.clientY && e.clientY <= r.bottom && r.left <= e.clientX && e.clientX <= r.right;
+      if (!inside) closePicker();
+    });
+  }
 
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(false); });
   window.addEventListener('online', () => refresh(true));

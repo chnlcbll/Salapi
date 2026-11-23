@@ -45,6 +45,8 @@ body {
   color: var(--ink);
   font-family: Outfit, system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 16px;
+  /* Keep fallback fonts at Outfit's x-height so text doesn't jump when it loads */
+  font-size-adjust: from-font;
   line-height: 1.4;
   padding: 24px 16px calc(32px + env(safe-area-inset-bottom));
 }
@@ -377,10 +379,46 @@ dialog {
   background: var(--surface);
   color: var(--ink);
   box-shadow: 0 16px 48px rgba(0, 0, 0, .2);
+
+  /* Closed / exit state. display + overlay keep it in the top layer while it animates out */
+  opacity: 0;
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: .22s;
+  transition-timing-function: var(--ease);
+  transition-behavior: allow-discrete;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transform: translateY(12px);
+  }
 }
-dialog::backdrop { background: rgba(0, 0, 0, .45); }
-dialog[open] { animation: rise .22s var(--ease); }
-@keyframes rise { from { transform: translateY(8px); } }
+
+/* Open state. data-closing drives the exit in browsers without overlay/display transitions */
+:is(dialog[open]):where(:not([data-closing])) {
+  opacity: 1;
+  @starting-style { opacity: 0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transform: none;
+    @starting-style { transform: translateY(12px); }
+  }
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, .45);
+    @starting-style { background-color: transparent; }
+  }
+}
+
+dialog::backdrop {
+  background-color: transparent;
+  transition-property: background-color, display, overlay;
+  transition-duration: .22s;
+  transition-timing-function: var(--ease);
+  transition-behavior: allow-discrete;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog { transition-duration: .1s; }
+}
 
 .picker-inner {
   display: flex;
@@ -460,6 +498,7 @@ dialog[open] { animation: rise .22s var(--ease); }
   .cur-name { display: none; }
 }
 
+/* Reduced motion: no movement anywhere; the picker keeps a short fade (set above) */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  *:not(dialog), *::before, *::after { transition: none !important; animation: none !important; }
 }
